@@ -1,5 +1,6 @@
 
 public class Spielfigur {
+	
 	private int spielfigurID;
 	private String spielfigurFarbe;
 	

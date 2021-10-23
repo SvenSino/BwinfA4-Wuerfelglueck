@@ -7,8 +7,6 @@ public class FileReader {
 		// festlegen
 		try (Scanner scanner = new Scanner(Paths.get("wuerfel3.txt"))) {
 
-//			String anzahlWuerfel = scanner.next();
-//			System.out.println(anzahlWuerfel);
 			boolean firstLine = true;
 			while (scanner.hasNextLine()) {
 				if (firstLine) {
@@ -20,7 +18,6 @@ public class FileReader {
 					int anzahlSeiten = Integer.valueOf(seiten[0]);
 					Wuerfel wuerfel = new Wuerfel(seiten);
 
-
 					System.out.println(anzahlSeiten + " seitiger Wuerfel hat gewürfelt: " + Wuerfel.wuerfeln(wuerfel));
 				}
 			}
@@ -29,5 +26,6 @@ public class FileReader {
 			e.printStackTrace();
 			System.out.println("Error: " + e.getMessage());
 		}
+
 	}
 }
