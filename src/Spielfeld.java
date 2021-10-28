@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Spielfeld {
+    ArrayList<Spielfigur> preturn;
     ArrayList<Spielfigur> spielfeld;
     ArrayList<Spielfigur> zielfeldRot;
     ArrayList<Spielfigur> zielfeldSchwarz;
@@ -38,6 +39,7 @@ public class Spielfeld {
 
 
     public boolean ziehe(int schritte, Spielfigur spielfigur) {
+        preturn = spielfeld;
         int startPos = spielfigur.getPosition();
         int startInternPos = spielfigur.getInternPosition();
         int zielInternPos = startInternPos + schritte;
@@ -62,7 +64,7 @@ public class Spielfeld {
         }
         return false;
     }
-// hier irgendwo fehler suchen startintpos
+
     public boolean setzeFigur(Spielfigur spielfigur1, int pos, int internPosition) {
         Spielfigur spielfigur2 = getPosition(pos);
         if (spielfigur2 == null || spielfigur1.getSpielfigurFarbe() != spielfigur2.getSpielfigurFarbe()) {
@@ -95,6 +97,9 @@ public class Spielfeld {
             spielfigur1.setInternPosition(zielPos + 40);
             spielfigur1.setPosition(zielPos + 40);
             zielfeld.set(zielPos, spielfigur1);
+            if(startPos > 39) {
+                zielfeld.set(startPos - 40, null);
+            }
             return true;
         }
         return false;

@@ -10,21 +10,23 @@ public class Game {
         ArrayList<Wuerfel> diceList = reader.getWuerfel();
         int wuerfelAnzahl = diceList.size();
         double[][] diceWinrates = new double[wuerfelAnzahl][wuerfelAnzahl];
-
+        int testSize = 10000;
         for (int i = 0; i < wuerfelAnzahl - 1; i++) {
             for (int j = i + 1; j < wuerfelAnzahl; j++) {
                 Wuerfel wuerfel1 = diceList.get(i);
                 Wuerfel wuerfel2 = diceList.get(j);
                 double winrate = 0;
-                for (int k = 0; k < 500; k++) {
-                    winrate += simulateGame(wuerfel1, wuerfel2) + (1-simulateGame(wuerfel2, wuerfel1));
+                for (int k = 0; k < testSize/2; k++) {
+                    winrate += simulateGame(wuerfel1, wuerfel2) + (1 - simulateGame(wuerfel2, wuerfel1));
                 }
-                winrate /= 1000;
+                winrate /= testSize;
                 diceWinrates[i][j] = winrate;
                 diceWinrates[j][i] = 1 - winrate;
             }
         }
-        System.out.println(Arrays.deepToString(diceWinrates));
+        for(int i = 0; i < wuerfelAnzahl; i++) {
+            System.out.println("Wuerfel " + i + " mit den Werten" + diceList.get(i).wuerfelWerte() +  " hat folgende Gewinnchance gegen andere Würfel: " + Arrays.toString(diceWinrates[i]));
+        }
     }
 
     public static double simulateGame(Wuerfel wuerfel1, Wuerfel wuerfel2) {
@@ -43,6 +45,4 @@ public class Game {
         }
         return aktiverSpieler;
     }
-
-
 }

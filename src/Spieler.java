@@ -35,10 +35,10 @@ public class Spieler {
         boolean gezogen = false;
         if (augenZahl == 6) {
             Spielfigur idle = getIdle();
-            if (idle != null || spielfeld.getFarbe(startPunkt) != farbe) {
+            if (idle != null && (spielfeld.getPosition(startPunkt) == null || spielfeld.getFarbe(startPunkt) != farbe)) {
                 spielfeld.setzeFigurStart(idle, startPunkt);
                 gezogen = true;
-            } else if (spielfeld.getFarbe(startPunkt) == farbe) {
+            } else if (spielfeld.getPosition(startPunkt) != null && spielfeld.getFarbe(startPunkt) == farbe) {
                 if (spielfeld.ziehe(augenZahl, spielfeld.getPosition(startPunkt))) {
                     gezogen = true;
                 }
@@ -50,6 +50,7 @@ public class Spieler {
             gezogen = spielfeld.ziehe(augenZahl, spielfigur);
             figurAmZug.remove(0);
         }
+        figurAmZug.clear();
         if (!gewonnen())
             if (augenZahl == 6) {
                 return turn();
@@ -85,18 +86,15 @@ public class Spieler {
             if (internPosition >= 0) {
                 order.add(internPosition);
             }
-
         }
-
-
         Collections.sort(order, Collections.reverseOrder());
         ArrayList<Spielfigur> figurenOrder = new ArrayList<Spielfigur>();
         for (Integer pos : order) {
             if (pos == spielfiguren.get(0).getInternPosition()) {
                 figurenOrder.add(spielfiguren.get(0));
-            } else if (pos == spielfiguren.get(1).getPosition()) {
+            } else if (pos == spielfiguren.get(1).getInternPosition()) {
                 figurenOrder.add(spielfiguren.get(1));
-            } else if (pos == spielfiguren.get(2).getPosition()) {
+            } else if (pos == spielfiguren.get(2).getInternPosition()) {
                 figurenOrder.add(spielfiguren.get(2));
             } else {
                 figurenOrder.add(spielfiguren.get(3));

@@ -21,6 +21,10 @@ public class Wuerfel {
 
 	}
 
+	public String wuerfelWerte() {
+		 return seitenWerte.toString();
+	}
+
 	public int getAnzahlSeiten() {
 		return anzahlSeiten;
 	}

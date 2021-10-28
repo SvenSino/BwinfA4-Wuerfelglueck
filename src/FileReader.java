@@ -6,7 +6,7 @@ public class FileReader {
     public  ArrayList<Wuerfel> getWuerfel() {
         // Wuerfel als Liste erstellen, Anzahl der Seiten festlegen, Werte der Seiten
         // festlegen
-        try (Scanner scanner = new Scanner(Paths.get("wuerfel3.txt"))) {
+        try (Scanner scanner = new Scanner(Paths.get("wuerfel2.txt"))) {
 
             boolean firstLine = true;
             ArrayList<Wuerfel> diceList = new ArrayList<Wuerfel>();
