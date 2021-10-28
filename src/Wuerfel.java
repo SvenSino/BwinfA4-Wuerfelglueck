@@ -15,9 +15,9 @@ public class Wuerfel {
 		
 	}
 
-	public static int wuerfeln(Wuerfel wuerfel) {
-		int rndWuerfel = new Random().nextInt(wuerfel.anzahlSeiten);
-		return wuerfel.seitenWerte.get(rndWuerfel);
+	public int wuerfeln() {
+		int rndWuerfel = new Random().nextInt(this.anzahlSeiten);
+		return seitenWerte.get(rndWuerfel);
 
 	}
 

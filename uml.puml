@@ -1,0 +1,25 @@
+@startuml
+
+class Wuerfel {
+-anzahlSeiten: int
+-seitenWerte: ArrayList<Integer>
++void wuerfeln(String[] wuerfelData)
+}
+class Spieler {
+-farbe: String
+-
+}
+class Spielfeld {
+-spielfeld: ArrayList<Integer>
+
+}
+class Game {
+-spielerAnzahl
+}
+class Spielfigur {
+-spielfigurID: int;
+-spielfigurFarbe: String;
+}
+
+
+@enduml
