@@ -1,15 +1,13 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Spielfeld {
-    ArrayList<Spielfigur> preturn;
     ArrayList<Spielfigur> spielfeld;
     ArrayList<Spielfigur> zielfeldRot;
     ArrayList<Spielfigur> zielfeldSchwarz;
     ArrayList<Spielfigur> zielfeldGruen;
     ArrayList<Spielfigur> zielfeldGelb;
 
+    //Initialisiert das Spielfeld und die Zielfelder mithilfe der Spieleranzahl
     public Spielfeld(int spielerzahl) {
         this.spielfeld = new ArrayList<Spielfigur>(40);
         for (int i = 0; i < 40; i++) {
@@ -37,12 +35,13 @@ public class Spielfeld {
         }
     }
 
-
+    //Versucht eine Spielfigur zu bewegen.
+    //Gibt bei Erfolg true zurück, sonst false
     public boolean ziehe(int schritte, Spielfigur spielfigur) {
-        preturn = spielfeld;
         int startPos = spielfigur.getPosition();
-        int startInternPos = spielfigur.getInternPosition();
+        int startInternPos = spielfigur.getSchrittZaehler();
         int zielInternPos = startInternPos + schritte;
+        //Prüft ob die Spielfigur mit dem Wurf auf einem Zielfeld oder einer Position auf dem Spielfeld landet
         if (zielInternPos > 43) {
             return false;
         } else if (40 <= zielInternPos && zielInternPos <= 43) {
@@ -57,7 +56,7 @@ public class Spielfeld {
             }
         } else {
             int zielPos = (startPos + schritte) % 40;
-            if (setzeFigur(spielfigur, zielPos, zielInternPos)) {
+            if (setzeFigurSpielfeld(spielfigur, zielPos, zielInternPos)) {
                 spielfeld.set(startPos, null);
                 return true;
             }
@@ -65,14 +64,16 @@ public class Spielfeld {
         return false;
     }
 
-    public boolean setzeFigur(Spielfigur spielfigur1, int pos, int internPosition) {
-        Spielfigur spielfigur2 = getPosition(pos);
+    //Prüft ob eine Figur sich auf das gegebene Feld auf dem Spielbrett(Zielfelder ausgeschlossen) bewegen kann und tut dies gegebenenfalls
+    //Beim Schlag einer Figur wird diese auf ihr Startfeld zurückgesetzt
+    public boolean setzeFigurSpielfeld(Spielfigur spielfigur1, int pos, int internPosition) {
+        Spielfigur spielfigur2 = getSpielfigur(pos);
         if (spielfigur2 == null || spielfigur1.getSpielfigurFarbe() != spielfigur2.getSpielfigurFarbe()) {
             spielfigur1.setPosition(pos);
-            spielfigur1.setInternPosition(internPosition);
+            spielfigur1.setSchrittZaehler(internPosition);
             if (spielfigur2 != null) {
                 spielfigur2.setPosition(-1);
-                spielfigur2.setInternPosition(-1);
+                spielfigur2.setSchrittZaehler(-1);
             }
             spielfeld.set(pos, spielfigur1);
             return true;
@@ -80,6 +81,8 @@ public class Spielfeld {
         return false;
     }
 
+    //Prüft ob eine Figur sich auf das gegebene Feld auf seinem Zielfeld bewegen kann
+    //und tut dies gegebenenfalls
     public boolean setzeFigurZiel(Spielfigur spielfigur1, int startPos, int zielPos) {
         String farbe = spielfigur1.getSpielfigurFarbe();
         ArrayList<Spielfigur> zielfeld;
@@ -94,10 +97,10 @@ public class Spielfeld {
         }
         Spielfigur spielfigur2 = zielfeld.get(zielPos);
         if (spielfigur2 == null) {
-            spielfigur1.setInternPosition(zielPos + 40);
+            spielfigur1.setSchrittZaehler(zielPos + 40);
             spielfigur1.setPosition(zielPos + 40);
             zielfeld.set(zielPos, spielfigur1);
-            if(startPos > 39) {
+            if (startPos > 39) {
                 zielfeld.set(startPos - 40, null);
             }
             return true;
@@ -105,27 +108,29 @@ public class Spielfeld {
         return false;
     }
 
-
+    //Gibt die Farbe der Spielfigur auf dem Feld an, falls dort eine steht
     public String getFarbe(int position) {
         if (spielfeld == null) {
             return "frei";
         } else {
-            return getPosition(position).getSpielfigurFarbe();
+            return getSpielfigur(position).getSpielfigurFarbe();
         }
     }
 
+    //Setzt eine Figur auf ihr Startfeld
     public void setzeFigurStart(Spielfigur figur, int position) {
-        Spielfigur geschlagen = getPosition(position);
+        Spielfigur geschlagen = getSpielfigur(position);
         if (geschlagen != null) {
-            geschlagen.setInternPosition(-1);
+            geschlagen.setSchrittZaehler(-1);
             geschlagen.setPosition(-1);
         }
         spielfeld.set(position, figur);
         figur.setPosition(position);
-        figur.setInternPosition(0);
+        figur.setSchrittZaehler(0);
     }
 
-    public Spielfigur getPosition(int position) {
+    //Gibt die Spielfigur an der Position zurück
+    public Spielfigur getSpielfigur(int position) {
         return spielfeld.get(position);
     }
 

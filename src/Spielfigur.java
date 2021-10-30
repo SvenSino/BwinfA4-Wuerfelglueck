@@ -1,21 +1,22 @@
 
 public class Spielfigur {
-
-    private int spielfigurID;
-    private int internPosition = -1;
+    //Zählt die gelaufenen Schritte einer Figur
+    private int schrittZaehler = -1;
+    //Zeigt die Position einer Spielfigur auf dem Spielfeld
     private int position = -1;
     private String spielfigurFarbe;
 
+    //Initialisiert eine Spielfigur mit ihrer Farbe
     public Spielfigur(String farbe) {
         this.spielfigurFarbe = farbe;
     }
 
-    public int getInternPosition() {
-        return internPosition;
+    public int getSchrittZaehler() {
+        return schrittZaehler;
     }
 
-    public void setInternPosition(int internPosition) {
-        this.internPosition = internPosition;
+    public void setSchrittZaehler(int schrittZaehler) {
+        this.schrittZaehler = schrittZaehler;
     }
 
     public void setSpielfigurFarbe(String spielfigurFarbe) {
@@ -25,16 +26,6 @@ public class Spielfigur {
     public String getSpielfigurFarbe() {
         return spielfigurFarbe;
     }
-
-
-    public int getSpielfigurID() {
-        return spielfigurID;
-    }
-
-    public void setSpielfigurID(int spielfigurID) {
-        this.spielfigurID = spielfigurID;
-    }
-
 
     public int getPosition() {
         return position;

@@ -3,11 +3,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileReader {
+    //Liest eine Datei ein und erstellt daraus eine Liste von Würfeln, legt die Anzahl der Seiten und deren Werte fest
     public  ArrayList<Wuerfel> getWuerfel() {
-        // Wuerfel als Liste erstellen, Anzahl der Seiten festlegen, Werte der Seiten
-        // festlegen
-        try (Scanner scanner = new Scanner(Paths.get("wuerfel2.txt"))) {
-
+        try (Scanner scanner = new Scanner(Paths.get("wuerfel4.txt"))) {
             boolean firstLine = true;
             ArrayList<Wuerfel> diceList = new ArrayList<Wuerfel>();
             while (scanner.hasNextLine()) {
@@ -23,7 +21,6 @@ public class FileReader {
                 }
             }
             return diceList;
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
