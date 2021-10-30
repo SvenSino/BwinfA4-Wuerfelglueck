@@ -134,4 +134,54 @@ public class Spielfeld {
         return spielfeld.get(position);
     }
 
+    //Prüft ob ein Spieler einen Zug durchführen kann
+    public boolean istZugMoeglich(Wuerfel wuerfel, ArrayList<Spielfigur> spielfiguren, int startPunkt) {
+        boolean figurInStartfeld = false;
+        String farbe = spielfiguren.get(0).getSpielfigurFarbe();
+        ArrayList<Spielfigur> spielfigurenSpielfeld = new ArrayList<Spielfigur>();
+        //Prüft ob sich mindestens eine Figur auf dem Startfeld befindet und fügt restliche einer Menge von Spielfiguren auf dem Spielfeld hinzu
+        for (Spielfigur spielfigur : spielfiguren) {
+            if (spielfigur.getSchrittZaehler() == -1) {
+                figurInStartfeld = true;
+            } else {
+                spielfigurenSpielfeld.add(spielfigur);
+            }
+        }
+        //Falls das Startfeld belegbar ist, wird true zurückgegeben
+        if (figurInStartfeld && (getSpielfigur(startPunkt) == null || getFarbe(startPunkt) != farbe)) {
+            return true;
+        }
+        ArrayList<Spielfigur> zielfeld;
+        if (farbe.equals("schwarz")) {
+            zielfeld = zielfeldSchwarz;
+        } else if (farbe.equals("gelb")) {
+            zielfeld = zielfeldGelb;
+        } else if (farbe.equals("gruen")) {
+            zielfeld = zielfeldGruen;
+        } else {
+            zielfeld = zielfeldRot;
+        }
+        //Prüft für jede Spielfigur auf dem Spielfeld, ob sie sich fortbewegen könnte und gibt bei einem Treffer true aus
+        for (Spielfigur spielfigur : spielfigurenSpielfeld) {
+            for (int augenZahl : wuerfel.wuerfelWerte()) {
+                int startPos = spielfigur.getPosition();
+                int startInternPos = spielfigur.getSchrittZaehler();
+                int zielInternPos = startInternPos + augenZahl;
+                //Prüft ob die Spielfigur mit dem Wurf auf einem Zielfeld oder einer Position auf dem Spielfeld landet
+                if (40 <= zielInternPos && zielInternPos <= 43) {
+                    int zielPos = zielInternPos - 40;
+                    if (zielfeld.get(zielPos) == null) {
+                        return true;
+                    }
+                } else if (zielInternPos < 40) {
+                    int zielPos = (startPos + augenZahl) % 40;
+                    if (spielfeld.get(zielPos) == null || spielfeld.get(zielPos).getSpielfigurFarbe() != spielfigur.getSpielfigurFarbe()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        //Kein Zug möglich
+        return false;
+    }
 }

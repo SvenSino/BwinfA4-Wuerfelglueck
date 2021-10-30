@@ -58,7 +58,7 @@ public class Spieler {
         }
         //Beim Wurf der Startaugenzahl wird im Fall eines Weiterspielens noch ein Zug durchgeführt, sonst wird false zurückgegeben
         if (!gewonnen())
-            if (augenZahl == startAugenzahl) {
+            if (augenZahl == startAugenzahl && istZugMoeglich()) {
                 return spielzug();
             } else {
                 return false;
@@ -112,4 +112,7 @@ public class Spieler {
         return figurenOrder;
     }
 
+    public boolean istZugMoeglich() {
+        return spielfeld.istZugMoeglich(wuerfel, spielfiguren, startPunkt);
+    }
 }

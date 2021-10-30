@@ -24,7 +24,11 @@ public class Wuerfel {
 		return seitenWerte.get(rndWuerfel);
 	}
 
-	public String wuerfelWerte() {
+	public ArrayList<Integer> wuerfelWerte() {
+		return seitenWerte;
+	}
+
+	public String wuerfelWerteString() {
 		 return seitenWerte.toString();
 	}
 }
