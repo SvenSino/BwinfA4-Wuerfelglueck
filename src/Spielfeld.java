@@ -182,6 +182,7 @@ public class Spielfeld {
             }
         }
         //Kein Zug möglich
+
         return false;
     }
 }
